@@ -16,8 +16,8 @@ const MarketCard = ({ restaurantData }) => {
         <View>
           <Image
             source={{
-              uri: `${restaurantData.profileImage}`,
-            }} // Replace with your actual image source
+              uri: restaurantData.profileImage,
+            }}
             className="w-full h-[180px] rounded-md"
             resizeMode="cover"
           />
