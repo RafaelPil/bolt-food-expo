@@ -1,6 +1,7 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 
 const MarketCard = ({ restaurantData }) => {
   // console.log(restaurantData.name);
@@ -10,29 +11,31 @@ const MarketCard = ({ restaurantData }) => {
   };
 
   return (
-    <View className={styles.cardContainer}>
-      <View>
-        <Image
-          source={{
-            uri: `${restaurantData.profileImage}`,
-          }} // Replace with your actual image source
-          className="w-full h-[180px] rounded-md"
-          resizeMode="cover"
-        />
-        <View className={styles.overlay}>
-          <Text className={styles.overlayText}>{restaurantData.delivery} min</Text>
+    <Link href={`home/${restaurantData.id}`} asChild>
+      <Pressable className={styles.cardContainer}>
+        <View>
+          <Image
+            source={{
+              uri: `${restaurantData.profileImage}`,
+            }} // Replace with your actual image source
+            className="w-full h-[180px] rounded-md"
+            resizeMode="cover"
+          />
+          <View className={styles.overlay}>
+            <Text className={styles.overlayText}>{restaurantData.delivery} min</Text>
+          </View>
         </View>
-      </View>
 
-      <View className="flex flex-row items-center justify-between">
-        <Text className="text-base font-bold mt-2">{restaurantData.name}</Text>
-        <View className="flex flex-row items-center">
-          <FontAwesome name="star" size={17} color={ratingStyle.color} />
-          <Text className="ml-1 font-bold text-base">{restaurantData.rating}</Text>
+        <View className="flex flex-row items-center justify-between">
+          <Text className="text-base font-bold mt-2">{restaurantData.name}</Text>
+          <View className="flex flex-row items-center">
+            <FontAwesome name="star" size={17} color={ratingStyle.color} />
+            <Text className="ml-1 font-bold text-base">{restaurantData.rating}</Text>
+          </View>
         </View>
-      </View>
-      <Text className="text-sm font-">{restaurantData.price} €</Text>
-    </View>
+        <Text className="text-sm font-">{restaurantData.price} €</Text>
+      </Pressable>
+    </Link>
   );
 };
 

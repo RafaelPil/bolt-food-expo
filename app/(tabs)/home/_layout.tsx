@@ -5,6 +5,10 @@ export default function HomeLayout() {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerTitle: 'Home', headerShown: false }} />
+      <Stack.Screen
+        name="[id]"
+        options={{ headerTitle: "Restaurant Details", headerShown: false }}
+      />
     </Stack>
   );
 }

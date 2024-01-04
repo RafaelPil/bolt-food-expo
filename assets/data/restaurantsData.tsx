@@ -1,6 +1,6 @@
 const dummyRestaurantsData = [
   {
-    id: 0,
+    id: "0",
     name: 'Bolt Food',
     rating: 4.7,
     price: 3,
@@ -50,7 +50,7 @@ const dummyRestaurantsData = [
     ],
   },
   {
-    id: 1,
+    id: "1",
     name: "Domino's Pizza",
     rating: 4.6,
     price: 3.5,
@@ -108,7 +108,7 @@ const dummyRestaurantsData = [
     ],
   },
   {
-    id: 2,
+    id: "2",
     name: 'Burger King',
     rating: 4.2,
     price: 2.5,
@@ -178,7 +178,7 @@ const dummyRestaurantsData = [
     ],
   },
   {
-    id: 3,
+    id: "3",
     name: 'Sushi Palace',
     rating: 4.5,
     price: 5.75,
@@ -248,7 +248,7 @@ const dummyRestaurantsData = [
     ],
   },
   {
-    id: 4,
+    id: "4",
     name: 'Mexican Grill',
     rating: 4.0,
     price: 1.99,
@@ -318,7 +318,7 @@ const dummyRestaurantsData = [
     ],
   },
   {
-    id: 5,
+    id: "5",
     name: 'Italian Bistro',
     rating: 4.8,
     price: 4.25,
@@ -389,7 +389,7 @@ const dummyRestaurantsData = [
     ],
   },
   {
-    id: 6,
+    id: "6",
     name: 'Steakhouse Delight',
     rating: 4.6,
     price: 6.99,
@@ -460,7 +460,7 @@ const dummyRestaurantsData = [
     ],
   },
   {
-    id: 7,
+    id: "7",
     name: 'Vegetarian Haven',
     rating: 4.3,
     price: 3.75,
