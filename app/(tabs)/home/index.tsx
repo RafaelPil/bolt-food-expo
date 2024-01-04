@@ -1,20 +1,25 @@
-import { SafeAreaView, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import FontAwesome5 from your package
 import MarketCard from 'components/marketCard';
-import { ScrollView } from 'react-native-gesture-handler';
+import { dummyRestaurantsData } from '../../../assets/data/restaurantsData';
 
 export default function HomeScreen() {
   return (
-    <ScrollView className={styles.container}>
+    <SafeAreaView className={styles.container}>
       <View className={styles.header}>
         <View className={styles.addressContainer}>
           <MaterialCommunityIcons name="map-marker-outline" size={28} color="black" />
           <Text className={styles.addressText}>Your Address Here</Text>
         </View>
       </View>
-      <Text className={styles.cardTitle}>Bolt Market</Text>
-      <MarketCard />
-    </ScrollView>
+      <Text className={styles.cardTitle}>All Restaurants and Stores</Text>
+      <FlatList
+        data={dummyRestaurantsData}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <MarketCard restaurantData={item} />}
+      />
+    </SafeAreaView>
   );
 }
 
