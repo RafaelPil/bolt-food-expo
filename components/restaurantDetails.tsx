@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React, { useLayoutEffect, useState } from 'react';
 import ParallaxScrollView from '../components/ParallaxScrollView.js';
 import { useNavigation } from 'expo-router';
-import { Ionicons, FontAwesome5, AntDesign } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5, AntDesign, FontAwesome } from '@expo/vector-icons';
 
 const RestaurantDetails = ({ post }) => {
   const navigation = useNavigation();
@@ -17,6 +17,10 @@ const RestaurantDetails = ({ post }) => {
     } else {
       setHeaderIconsColor('white');
     }
+  };
+
+  const ratingStyle = {
+    color: post.rating < 4.5 ? 'black' : '#FF8C00',
   };
 
   useLayoutEffect(() => {
@@ -52,7 +56,7 @@ const RestaurantDetails = ({ post }) => {
           <Image className="w-full h-full" source={{ uri: post.profileImage }} resizeMode="cover" />
         )}
         stickyHeaderHeight={80}
-        contentBackgroundColor="#d3d3d3"
+        contentBackgroundColor="#ecedef"
         renderStickyHeader={() => (
           <View className={styles.headerContainer}>
             <Text className={styles.headerText}>{post.name}</Text>
@@ -61,7 +65,14 @@ const RestaurantDetails = ({ post }) => {
         scrollEvent={handleScroll}>
         <View className={styles.namesContainer}>
           <View className="m-6">
-            <Text className={styles.restaurantName}>{post.name}</Text>
+            <View className={styles.titleContaierRow}>
+              <Text className={styles.restaurantName}>{post.name}</Text>
+              <View className={styles.ratingContainerRow}>
+                <FontAwesome name="star" size={17} color={ratingStyle.color} />
+                <Text className="ml-1 font-bold text-base">{post.rating}</Text>
+              </View>
+            </View>
+
             <View className={styles.deliveryTextsContainer}>
               <Ionicons name="bicycle" size={18} color="black" />
               <Text className={styles.deliveryTexts}>Delivery</Text>
@@ -82,6 +93,10 @@ const RestaurantDetails = ({ post }) => {
             <Text className={styles.deliveryTexts}>{post.about}</Text>
           </View>
         </View>
+
+        <View className=" flex bg-white mt-2 rounded-2xl">
+          <View className="m-6"></View>
+        </View>
       </ParallaxScrollView>
     </>
   );
@@ -89,13 +104,15 @@ const RestaurantDetails = ({ post }) => {
 
 const styles = {
   namesContainer: 'flex rounded-2xl -mt-12 bg-white',
+  titleContaierRow: 'flex flex-row items-center justify-between',
+  ratingContainerRow: 'flex flex-row items-center',
   roundButton: 'w-10 h-10 bg-transparent rounded-full justify-center items-center',
   rightContainer: 'flex flex-row justify-center items-center gap-2',
   headerContainer: 'justify-end ml-28 h-16',
   headerText: 'text-xl font-bold',
-  restaurantName: 'text-2xl font-bold',
+  restaurantName: 'text-2xl font-bold text-[#2e303d]',
   deliveryTextsContainer: 'flex flex-row items-center',
-  deliveryTexts: 'text-sm ml-1 text-gray-700',
+  deliveryTexts: 'text-sm ml-1 text-[#6e6d72]',
   delyveryTextMoreInfo: 'text-sm font-bold',
 };
 

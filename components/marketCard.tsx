@@ -18,7 +18,7 @@ const MarketCard = ({ restaurantData }) => {
             source={{
               uri: restaurantData.profileImage,
             }}
-            className="w-full h-[180px] rounded-md"
+            className={styles.cardImage}
             resizeMode="cover"
           />
           <View className={styles.overlay}>
@@ -26,25 +26,29 @@ const MarketCard = ({ restaurantData }) => {
           </View>
         </View>
 
-        <View className="flex flex-row items-center justify-between">
-          <Text className="text-base font-bold mt-2">{restaurantData.name}</Text>
-          <View className="flex flex-row items-center">
+        <View className={styles.textsContainer}>
+          <Text className={styles.restaurantName}>{restaurantData.name}</Text>
+          <View className={styles.ratingContainer}>
             <FontAwesome name="star" size={17} color={ratingStyle.color} />
-            <Text className="ml-1 font-bold text-base">{restaurantData.rating}</Text>
+            <Text className={styles.rating}>{restaurantData.rating}</Text>
           </View>
         </View>
-        <Text className="text-sm font-">{restaurantData.price} €</Text>
+        <Text className={styles.price}>{restaurantData.price} €</Text>
       </Pressable>
     </Link>
   );
 };
 
 const styles = {
-  cardContainer: 'mt-4',
-  cardImage: 'w-full h-200 rounded-lg',
+  cardContainer: 'mt-1',
+  cardImage: 'w-full h-[180px] rounded-md',
   overlay: 'absolute bg-white rounded-sm bottom-2 right-2',
   overlayText: 'text-sm font-semibold py-1 px-2',
-  //   cartBottomTextContainer:
+  textsContainer: 'flex flex-row items-center justify-between',
+  restaurantName: 'text-base font-bold mt-2 text-[#2e303d]',
+  ratingContainer: 'flex flex-row items-center',
+  rating: 'ml-1 font-bold text-base',
+  price: 'text-sm font-[#6e6d72]',
 };
 
 export default MarketCard;

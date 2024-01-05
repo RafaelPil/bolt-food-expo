@@ -12,11 +12,13 @@ export default function HomeScreen() {
           <Text className={styles.addressText}>Your Address Here</Text>
         </View>
       </View>
-      <Text className={styles.cardTitle}>All Restaurants and Stores</Text>
       <FlatList
         data={dummyRestaurantsData}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
+        ListHeaderComponent={() => (
+          <Text className={styles.cardTitle}>All Restaurants and Stores</Text>
+        )}
         renderItem={({ item }) => <MarketCard restaurantData={item} />}
       />
     </SafeAreaView>
@@ -31,5 +33,5 @@ const styles = {
   addressText: 'ml-2',
   cardContainer: 'mt-4',
   cardImage: 'w-full h-200 rounded-lg',
-  cardTitle: 'mt-4 text-lg font-bold',
+  cardTitle: 'mt-4 mb-2 text-lg font-bold',
 };
