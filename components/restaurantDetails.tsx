@@ -55,10 +55,12 @@ const RestaurantDetails = ({ post }) => {
   const renderItem: ListRenderItem<any> = ({ item, index }) => (
     <Link href="/" asChild>
       <TouchableOpacity className={styles.itemContainer}>
-        <View className="flex flex-1">
-          <Text>{item.name}</Text>
-          <Text>{item.price}</Text>
+        <View className="flex flex-1 my-4 mr-8">
+          <Text className="text-base">{item.name}</Text>
+          <Text className="text-sm text-[#6e6d72]">{item.info}</Text>
+          <Text className="">{item.price} €</Text>
         </View>
+        <Image source={{ uri: item.img }} className={styles.foodImage} resizeMode="cover" />
       </TouchableOpacity>
     </Link>
   );
@@ -66,7 +68,7 @@ const RestaurantDetails = ({ post }) => {
   return (
     <>
       <ParallaxScrollView
-        style={{ flex: 1 }}
+        styles={{ flex: 1 }}
         backgroundColor="white"
         parallaxHeaderHeight={200}
         renderBackground={() => (
@@ -107,7 +109,7 @@ const RestaurantDetails = ({ post }) => {
               />
             </View>
             <View className={styles.separator} />
-            <Text className={styles.deliveryTexts}>{post.about}</Text>
+            <Text className={styles.deliveryAbout}>{post.about}</Text>
           </View>
         </View>
 
@@ -118,10 +120,10 @@ const RestaurantDetails = ({ post }) => {
               scrollEnabled={false}
               keyExtractor={(item, index) => `${item.id + index}`}
               renderItem={renderItem}
-              ItemSeparatorComponent={() => <View className="h-[0.5px] bg-slate-300" />}
-              SectionSeparatorComponent={() => <View className="h-[0.5px] bg-slate-300" />}
+              ItemSeparatorComponent={() => <View className="border-[0.5px] border-slate-300" />}
+              SectionSeparatorComponent={() => <View className="border-[0.5px] border-slate-300" />}
               renderSectionHeader={({ section: { title, index } }) => (
-                <Text className="text-2xl font-bold text-[#2e303d] mb-4">{title}</Text>
+                <Text className="text-2xl font-bold text-[#2e303d] my-4">{title}</Text>
               )}
             />
           </View>
@@ -141,12 +143,17 @@ const styles = {
   headerText: 'text-xl font-bold',
   restaurantName: 'text-2xl font-bold text-[#2e303d]',
   deliveryTextsContainer: 'flex flex-row items-center',
-  deliveryTexts: 'text-sm ml-1 text-[#6e6d72]',
+  deliveryTexts: 'text-sm ml-1 text-[#2e303d]',
   delyveryTextMoreInfo: 'text-sm font-bold',
   rating: 'ml-1 font-bold text-base',
   separator: 'h-[0.5px] bg-slate-300 my-4',
+  deliveryAbout: 'text-sm ml-1 text-[#2e303d]',
   itemsContainer: 'flex bg-white mt-2 rounded-t-2xl',
-  itemContainer: 'flex flex-row justify-between my-2',
+  itemContainer: 'flex flex-row justify-between my-2 items-center',
+  food: '',
+  foodText: 'text-[#6e6d72]',
+  foodPrice: '',
+  foodImage: 'w-28 h-24 rounded-sm',
 };
 
 export default RestaurantDetails;
