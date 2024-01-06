@@ -1,12 +1,28 @@
-import { View, Text, Image, TouchableOpacity, SectionList, ListRenderItem } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  SectionList,
+  ListRenderItem,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import React, { useLayoutEffect, useState } from 'react';
 import ParallaxScrollView from '../components/ParallaxScrollView.js';
 import { Link, useNavigation } from 'expo-router';
 import { Ionicons, FontAwesome5, AntDesign, FontAwesome } from '@expo/vector-icons';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 const RestaurantDetails = ({ post }) => {
   const navigation = useNavigation();
   const [headerIconsColor, setHeaderIconsColor] = useState('white');
+  const [activeButtonIndex, setActiveButtonIndex] = useState(0);
+
+  const opacity = useSharedValue(0);
+  const animatedStyles = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
 
   const handleScroll = (event) => {
     const scrollPosition = event.nativeEvent.contentOffset.y;
@@ -14,9 +30,15 @@ const RestaurantDetails = ({ post }) => {
     // Change header icons color based on scroll position
     if (scrollPosition > 80) {
       setHeaderIconsColor('black');
+      opacity.value = withTiming(1);
     } else {
       setHeaderIconsColor('white');
+      opacity.value = withTiming(0);
     }
+  };
+
+  const selectCategory = (index: Number) => {
+    setActiveButtonIndex(index);
   };
 
   const ratingStyle = {
@@ -72,7 +94,12 @@ const RestaurantDetails = ({ post }) => {
         backgroundColor="white"
         parallaxHeaderHeight={200}
         renderBackground={() => (
-          <Image className="w-full h-full" source={{ uri: post.profileImage }} resizeMode="cover" />
+          <Image
+            className="w-full h-full"
+            style={{ backgroundColor: 'red' }}
+            source={{ uri: post.profileImage }}
+            resizeMode="cover"
+          />
         )}
         stickyHeaderHeight={80}
         contentBackgroundColor="#ecedef"
@@ -129,6 +156,33 @@ const RestaurantDetails = ({ post }) => {
           </View>
         </View>
       </ParallaxScrollView>
+
+      <Animated.View style={[cStyles.stickySegments, animatedStyles]}>
+        <View className="justify-center pt-2 bg-white">
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 16, alignItems: 'center', gap: 10 }}>
+            {post.food.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                className={
+                  activeButtonIndex === index ? styles.stickyButtonActive : styles.stickyButton
+                }
+                onPress={() => selectCategory(index)}>
+                <Text
+                  className={
+                    activeButtonIndex === index
+                      ? styles.stickyButtonTextActive
+                      : styles.stickyButtonText
+                  }>
+                  {item.category}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+      </Animated.View>
     </>
   );
 };
@@ -154,6 +208,25 @@ const styles = {
   foodText: 'text-[#6e6d72]',
   foodPrice: '',
   foodImage: 'w-28 h-24 rounded-sm',
+  stickyContainer: 'absolute h-12 left-0 right-0 top-20 bg-white overflow-hidden',
+  stickyShadow: '',
+  stickyButtonActive: 'px-2 py-1',
+  stickyButton: 'px-2 py-1',
+  stickyButtonTextActive: 'font-bold text-base',
+  stickyButtonText: 'text-base',
 };
+
+const cStyles = StyleSheet.create({
+  stickySegments: {
+    position: 'absolute',
+    height: 50,
+    left: 0,
+    right: 0,
+    top: 80,
+    backgroundColor: '#fff',
+    overflow: 'hidden',
+    paddingBottom: 4,
+  },
+});
 
 export default RestaurantDetails;
