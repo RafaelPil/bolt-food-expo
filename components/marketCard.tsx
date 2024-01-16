@@ -40,7 +40,7 @@ const MarketCard = ({ restaurantData }) => {
 };
 
 const styles = {
-  cardContainer: 'mt-1',
+  cardContainer: 'mt-5',
   cardImage: 'w-full h-[180px] rounded-md',
   overlay: 'absolute bg-white rounded-sm bottom-2 right-2',
   overlayText: 'text-sm font-semibold py-1 px-2',

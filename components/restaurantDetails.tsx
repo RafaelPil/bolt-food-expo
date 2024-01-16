@@ -111,7 +111,7 @@ const RestaurantDetails = ({ post }) => {
         renderBackground={() => (
           <Image
             className="w-full h-full"
-            style={{ backgroundColor: 'red' }}
+            style={{ backgroundColor: 'white' }}
             source={{ uri: post.profileImage }}
             resizeMode="cover"
           />
