@@ -18,7 +18,7 @@ const RestaurantDetails = ({ post }) => {
   const navigation = useNavigation();
   const [headerIconsColor, setHeaderIconsColor] = useState('white');
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
-  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
 
   const opacity = useSharedValue(0);
   const animatedStyles = useAnimatedStyle(() => ({
@@ -88,7 +88,7 @@ const RestaurantDetails = ({ post }) => {
   }, [headerIconsColor]);
 
   const renderItem: ListRenderItem<any> = ({ item, index }) => (
-    <Link href="/" asChild>
+    <Link href={{ pathname: '/modalFood', params: { id: item.id } }} asChild>
       <TouchableOpacity className={styles.itemContainer}>
         <View className="flex flex-1 my-4 mr-8">
           <Text className="text-base">{item.name}</Text>

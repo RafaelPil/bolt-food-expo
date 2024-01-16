@@ -1,12 +1,31 @@
-import { Stack } from 'expo-router';
+import { Stack, useNavigation } from 'expo-router';
+import { TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function RootLayout() {
+  const navigation = useNavigation();
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="[id]"
         options={{ headerTitle: 'Restaurant Details', headerShown: true }}
+      />
+      <Stack.Screen
+        name="modalFood"
+        options={{
+          presentation: 'modal',
+          headerTitle: '',
+          headerTransparent: true,
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <Ionicons name="close-outline" size={28} color={'#5A5A5A'} />
+            </TouchableOpacity>
+          ),
+        }}
       />
     </Stack>
   );
