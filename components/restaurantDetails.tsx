@@ -18,6 +18,7 @@ const RestaurantDetails = ({ post }) => {
   const navigation = useNavigation();
   const [headerIconsColor, setHeaderIconsColor] = useState('white');
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
 
   const opacity = useSharedValue(0);
   const animatedStyles = useAnimatedStyle(() => ({
@@ -28,13 +29,12 @@ const RestaurantDetails = ({ post }) => {
     const scrollPosition = event.nativeEvent.contentOffset.y;
 
     // Find the active category based on scroll position
-    let activeCategoryIndex = 0;
     data.forEach((category, index) => {
       const sectionTop = index * 260; // Assuming SECTION_HEIGHT is the height of each section
       const sectionBottom = (index + 1) * 260;
 
       if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-        activeCategoryIndex = index;
+        setActiveCategoryIndex(index);
       }
     });
 
