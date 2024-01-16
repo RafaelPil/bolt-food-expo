@@ -10,11 +10,13 @@ import {
 } from 'react-native';
 import React, { useLayoutEffect, useState } from 'react';
 import ParallaxScrollView from '../components/ParallaxScrollView.js';
-import { Link, useNavigation } from 'expo-router';
+import { Link, useGlobalSearchParams, useNavigation } from 'expo-router';
 import { Ionicons, FontAwesome5, AntDesign, FontAwesome } from '@expo/vector-icons';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 const RestaurantDetails = ({ post }) => {
+  const { id } = useGlobalSearchParams();
+  // console.log(id);
   const navigation = useNavigation();
   const [headerIconsColor, setHeaderIconsColor] = useState('white');
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
@@ -88,14 +90,14 @@ const RestaurantDetails = ({ post }) => {
   }, [headerIconsColor]);
 
   const renderItem: ListRenderItem<any> = ({ item, index }) => (
-    <Link href={{ pathname: '/modalFood', params: { id: item.id } }} asChild>
+    <Link href={{ pathname: '/modalFood', params: { id: id, itemId: item.id } }} asChild>
       <TouchableOpacity className={styles.itemContainer}>
         <View className="flex flex-1 my-4 mr-8">
           <Text className="text-base">{item.name}</Text>
           <Text className="text-sm text-[#6e6d72]">{item.info}</Text>
           <Text className="">{item.price} €</Text>
         </View>
-        <Image source={{ uri: item.img }} className={styles.foodImage} resizeMode="cover" />
+        <Image source={{ uri: item.img }} className={styles.foodImage} resizeMode="contain" />
       </TouchableOpacity>
     </Link>
   );

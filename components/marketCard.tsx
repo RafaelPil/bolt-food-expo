@@ -11,7 +11,7 @@ const MarketCard = ({ restaurantData }) => {
   };
 
   return (
-    <Link href={`${restaurantData.id}`} asChild>
+    <Link href={{ pathname: `${restaurantData.id}`, params: { id: restaurantData.id } }} asChild>
       <Pressable className={styles.cardContainer}>
         <View>
           <Image

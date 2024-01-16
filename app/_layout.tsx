@@ -19,10 +19,11 @@ export default function RootLayout() {
           headerTransparent: true,
           headerRight: () => (
             <TouchableOpacity
+              style={{ backgroundColor: '#fff', borderRadius: 20, padding: 2 }}
               onPress={() => {
                 navigation.goBack();
               }}>
-              <Ionicons name="close-outline" size={28} color={'#5A5A5A'} />
+              <Ionicons name="close-outline" size={30} color={'#5A5A5A'} />
             </TouchableOpacity>
           ),
         }}
