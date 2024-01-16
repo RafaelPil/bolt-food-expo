@@ -27,7 +27,20 @@ const RestaurantDetails = ({ post }) => {
   const handleScroll = (event) => {
     const scrollPosition = event.nativeEvent.contentOffset.y;
 
-    // Change header icons color based on scroll position
+    // Find the active category based on scroll position
+    let activeCategoryIndex = 0;
+    data.forEach((category, index) => {
+      const sectionTop = index * 260; // Assuming SECTION_HEIGHT is the height of each section
+      const sectionBottom = (index + 1) * 260;
+
+      if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+        activeCategoryIndex = index;
+      }
+    });
+
+    // Update the active category index and header icons color
+    setActiveButtonIndex(activeCategoryIndex);
+
     if (scrollPosition > 80) {
       setHeaderIconsColor('black');
       opacity.value = withTiming(1);
