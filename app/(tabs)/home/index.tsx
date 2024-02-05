@@ -3,8 +3,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import MarketCard from 'components/marketCard';
 import { dummyRestaurantsData } from '../../../assets/data/restaurantsData';
 import { Link } from 'expo-router';
+import { useRoute } from '@react-navigation/native';
 
 export default function HomeScreen() {
+  const route = useRoute();
+
+  const address = route.params?.address || 'Your Address Here';
+  // Extract the street name before the first comma
+  const streetName = address.split(',')[0].trim();
+  console.log(streetName);
+
   return (
     <SafeAreaView className={styles.container}>
       <FlatList
@@ -17,7 +25,7 @@ export default function HomeScreen() {
               <TouchableOpacity className={styles.header}>
                 <View className={styles.addressContainer}>
                   <MaterialCommunityIcons name="map-marker-outline" size={28} color="black" />
-                  <Text className={styles.addressText}>Your Address Here</Text>
+                  <Text className={styles.addressText}>{streetName}</Text>
                 </View>
               </TouchableOpacity>
             </Link>
