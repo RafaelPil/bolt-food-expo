@@ -28,6 +28,23 @@ export default function RootLayout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="modalAddress"
+        options={{
+          presentation: 'modal',
+          title: 'Delivery address',
+          headerTransparent: true,
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('(tabs)');
+              }}>
+              <Ionicons name="close-outline" size={28} color={'#5A5A5A'} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </Stack>
   );
 }

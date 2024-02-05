@@ -1,23 +1,29 @@
-import { FlatList, SafeAreaView, Text, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import FontAwesome5 from your package
+import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import MarketCard from 'components/marketCard';
 import { dummyRestaurantsData } from '../../../assets/data/restaurantsData';
+import { Link } from 'expo-router';
 
 export default function HomeScreen() {
   return (
     <SafeAreaView className={styles.container}>
-      <View className={styles.header}>
-        <View className={styles.addressContainer}>
-          <MaterialCommunityIcons name="map-marker-outline" size={28} color="black" />
-          <Text className={styles.addressText}>Your Address Here</Text>
-        </View>
-      </View>
       <FlatList
         data={dummyRestaurantsData}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={() => (
-          <Text className={styles.cardTitle}>All Restaurants and Stores</Text>
+          <>
+            <Link href="/modalAddress" asChild>
+              <TouchableOpacity className={styles.header}>
+                <View className={styles.addressContainer}>
+                  <MaterialCommunityIcons name="map-marker-outline" size={28} color="black" />
+                  <Text className={styles.addressText}>Your Address Here</Text>
+                </View>
+              </TouchableOpacity>
+            </Link>
+
+            <Text className={styles.cardTitle}>All Restaurants and Stores</Text>
+          </>
         )}
         renderItem={({ item }) => <MarketCard restaurantData={item} />}
       />
