@@ -35,16 +35,8 @@ export default function RootLayout() {
           options={{
             presentation: 'modal',
             title: 'Delivery address',
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('(tabs)');
-                }}>
-                <Ionicons name="close-outline" size={28} color={'#5A5A5A'} />
-              </TouchableOpacity>
-            ),
+            headerShown: false,
+           
           }}
         />
       </Stack>
