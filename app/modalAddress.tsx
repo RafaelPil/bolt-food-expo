@@ -9,6 +9,8 @@ const ModalAddress = () => {
   const [headerVisible, setHeaderVisible] = useState(false);
   const [containerMargin] = useState(new Animated.Value(40));
 
+  const googleAPI = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
+
   const toggleHeaderVisibility = () => {
     setHeaderVisible(!headerVisible);
     if (!headerVisible) {
@@ -52,7 +54,7 @@ const ModalAddress = () => {
           placeholder="Enter a new address"
           fetchDetails
           query={{
-            key: 'AIzaSyA6pKMvzww3IayKI1ngzZOFnZ-Sk6TrQhM',
+            key: googleAPI,
             language: 'en',
             type: 'address',
           }}
@@ -78,7 +80,9 @@ const ModalAddress = () => {
           )}
           enablePoweredByContainer={false}
           renderRow={(item) => (
-            <Link href={{ pathname: '(tabs)/home', params: { address: item.description } }} asChild>
+            <Link
+              href={{ pathname: '/(tabs)/home', params: { address: item.description } }}
+              asChild>
               <TouchableOpacity className="flex flex-row items-center">
                 <Feather name="map-pin" size={18} color="black" />
                 <Text className="ml-3">{item.description}</Text>
@@ -93,14 +97,16 @@ const ModalAddress = () => {
 
   return (
     <Animated.View style={[styles.container, { marginTop: containerMargin }]}>
-      <Link href="/(tabs)/home" asChild>
-        <TouchableOpacity style={styles.closeButton}>
-          <View style={styles.closeButtonContent}>
+      <View style={styles.textContainer}>
+        <Link href="/(tabs)/home" asChild>
+          <TouchableOpacity style={styles.closeButton}>
             <Ionicons name="close-outline" size={30} color={'#161616'} />
-            <Text style={styles.title}>Delivery address</Text>
-          </View>
-        </TouchableOpacity>
-      </Link>
+          </TouchableOpacity>
+        </Link>
+        <View style={styles.deliveryText}>
+          <Text style={styles.title}>Delivery address</Text>
+        </View>
+      </View>
 
       <TouchableOpacity style={styles.inputContainer} onPress={toggleHeaderVisibility}>
         <AntDesign
@@ -122,17 +128,20 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 20,
   },
-  closeButton: {
-    marginTop: 12,
+  closeButton: {},
+  deliveryText: {
+    marginRight: 'auto',
+    marginLeft: 'auto',
   },
-  closeButtonContent: {
+  textContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 10,
   },
   title: {
     fontWeight: 'bold',
     fontSize: 16,
-    marginLeft: 8,
+    marginRight: 30,
   },
   inputContainer: {
     flexDirection: 'row',

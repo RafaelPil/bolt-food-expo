@@ -7,15 +7,13 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }) => {
-  const [enteredAddress, setEnteredAddress] = useState('');
+  const [addressName, setEnteredAddress] = useState('');
   // Add more state variables as needed
 
-  const setAddress = (address) => {
-    setEnteredAddress(address);
+  const setAddress = (addressN) => {
+    setEnteredAddress(addressN);
   };
   // Add more setter functions as needed
 
-  return (
-    <AppContext.Provider value={{ enteredAddress, setAddress }}>{children}</AppContext.Provider>
-  );
+  return <AppContext.Provider value={{ addressName, setAddress }}>{children}</AppContext.Provider>;
 };

@@ -11,7 +11,8 @@ export default function HomeScreen() {
   const address = route.params?.address || 'Your Address Here';
   // Extract the street name before the first comma
   const streetName = address.split(',')[0].trim();
-  console.log(streetName);
+  //console.log(streetName);
+
 
   return (
     <SafeAreaView className={styles.container}>
