@@ -52,7 +52,7 @@ const ModalAddress = () => {
           placeholder="Enter a new address"
           fetchDetails
           query={{
-            key: 'YOUR_API_KEY',
+            key: 'AIzaSyA6pKMvzww3IayKI1ngzZOFnZ-Sk6TrQhM',
             language: 'en',
             type: 'address',
           }}
@@ -72,8 +72,8 @@ const ModalAddress = () => {
             />
           )}
           renderRightButton={() => (
-            <TouchableOpacity onPress={toggleHeaderVisibility}>
-              <Text style={{ alignSelf: 'center', marginRight: 50, color: '#5A5A5A' }}>Cancel</Text>
+            <TouchableOpacity onPress={toggleHeaderVisibility} style={{ alignSelf: 'center' }}>
+              <Text style={{ marginRight: 50, color: '#5A5A5A' }}>Cancel</Text>
             </TouchableOpacity>
           )}
           enablePoweredByContainer={false}
@@ -120,10 +120,10 @@ const ModalAddress = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginHorizontal: 20,
   },
   closeButton: {
     marginTop: 12,
-    marginLeft: 4,
   },
   closeButtonContent: {
     flexDirection: 'row',
@@ -140,9 +140,9 @@ const styles = StyleSheet.create({
     marginTop: 4,
     borderRadius: 8,
     backgroundColor: '#e5e7eb',
-    marginHorizontal: 6,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+
+    paddingHorizontal: 6,
+    paddingVertical: 14,
   },
   input: {
     flex: 1,
