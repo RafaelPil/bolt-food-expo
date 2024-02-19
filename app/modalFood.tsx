@@ -1,6 +1,6 @@
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import { Link, useLocalSearchParams, useNavigation } from 'expo-router';
 import { dummyRestaurantsData } from 'assets/data/restaurantsData';
 
 const ModalFood = () => {
@@ -9,18 +9,22 @@ const ModalFood = () => {
   const meals = restaurantById?.food.flatMap((c) => c.meals);
   const foundMeals = meals?.find((m) => m.id === +itemId);
   console.log(foundMeals);
+  const navigation = useNavigation();
 
   const [note, setNote] = useState('');
   const [count, setCount] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(foundMeals?.price);
   // items count
   const decrementCount = () => {
     if (count > 1) {
       setCount(count - 1);
+      setTotalPrice(totalPrice - foundMeals?.price);
     }
   };
 
   const incrementCount = () => {
     setCount(count + 1);
+    setTotalPrice(totalPrice + foundMeals?.price);
   };
 
   return (
@@ -53,8 +57,11 @@ const ModalFood = () => {
             <Text className="text-2xl text-black">+</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity className="bg-[#34BB78] w-56 rounded-full items-center justify-center">
-          <Text className="text-white">Add €3.00</Text>
+
+        <TouchableOpacity
+          className="bg-[#34BB78] w-56 rounded-full items-center justify-center"
+          onPress={() => navigation.goBack()}>
+          <Text className="text-white">Add €{totalPrice?.toFixed(2)}</Text>
         </TouchableOpacity>
       </View>
     </View>
