@@ -7,7 +7,7 @@ import { useAppContext } from 'context/appContext';
 const ModalFood = () => {
   const { id, itemId } = useLocalSearchParams();
   const navigation = useNavigation();
-  const { setFoodData, count, setCount } = useAppContext();
+  const { setFoodData, count, setCount} = useAppContext();
 
   const [note, setNote] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
@@ -38,25 +38,29 @@ const ModalFood = () => {
     fetchData();
   }, [id, itemId]);
 
-  console.log(foundMeals?.id);
+  // Update total price whenever foundMeals changes
+  useEffect(() => {
+    if (foundMeals) {
+      setTotalPrice(foundMeals.price * count);
+    }
+  }, [foundMeals, count]);
 
   // items count
   const decrementCount = () => {
     if (count > 1) {
       setCount(count - 1);
-      setTotalPrice(totalPrice - foundMeals?.price);
     }
   };
 
   const incrementCount = () => {
     setCount(count + 1);
-    setTotalPrice(totalPrice + foundMeals?.price);
   };
 
   const goBackAndSetFoodData = () => {
     setFoodData({ totalPrice, restaurantById, meals, foundMeals, count });
     navigation.goBack();
   };
+
 
   return (
     <View className={styles.container}>

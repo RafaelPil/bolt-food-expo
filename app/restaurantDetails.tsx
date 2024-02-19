@@ -23,6 +23,10 @@ const RestaurantDetails = ({ post }) => {
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
 
+  const { foundMeals, count, totalPrice } = useAppContext();
+    console.log(count);
+    console.log(totalPrice);
+
   const opacity = useSharedValue(0);
   const animatedStyles = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -91,8 +95,6 @@ const RestaurantDetails = ({ post }) => {
   }, [headerIconsColor]);
 
   const renderItem: ListRenderItem<any> = ({ item, index }) => {
-    const { foundMeals, count } = useAppContext();
-    console.log(count);
 
     return (
       <Link href={{ pathname: '/modalFood', params: { id: id, itemId: item.id } }} asChild>
