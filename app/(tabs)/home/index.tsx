@@ -4,15 +4,18 @@ import MarketCard from 'components/marketCard';
 import { dummyRestaurantsData } from '../../../assets/data/restaurantsData';
 import { Link } from 'expo-router';
 import { useRoute } from '@react-navigation/native';
+import { useAppContext } from 'context/appContext';
+import { useEffect } from 'react';
 
 export default function HomeScreen() {
   const route = useRoute();
+  const { setStreet, streetName } = useAppContext();
 
-  const address = route.params?.address || 'Your Address Here';
-  // Extract the street name before the first comma
-  const streetName = address.split(',')[0].trim();
-  //console.log(streetName);
-
+  useEffect(() => {
+    const address = route.params?.address || 'Your Address Here';
+    const streetName = address.split(',')[0].trim();
+    setStreet(streetName);
+  }, [route.params?.address, setStreet]);
 
   return (
     <SafeAreaView className={styles.container}>

@@ -1,19 +1,17 @@
 import { createContext, useContext, useState } from 'react';
 
-const AppContext = createContext(); // No arguments expected here
+const AppContext = createContext();
 
 export const useAppContext = () => {
   return useContext(AppContext);
 };
 
 export const AppProvider = ({ children }) => {
-  const [addressName, setEnteredAddress] = useState('');
-  // Add more state variables as needed
+  const [streetName, setStreetName] = useState('');
 
-  const setAddress = (addressN) => {
-    setEnteredAddress(addressN);
+  const setStreet = (street) => {
+    setStreetName(street);
   };
-  // Add more setter functions as needed
 
-  return <AppContext.Provider value={{ addressName, setAddress }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ streetName, setStreet }}>{children}</AppContext.Provider>;
 };

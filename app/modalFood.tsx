@@ -2,6 +2,7 @@ import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { Link, useLocalSearchParams, useNavigation } from 'expo-router';
 import { dummyRestaurantsData } from 'assets/data/restaurantsData';
+import { useAppContext } from 'context/appContext';
 
 const ModalFood = () => {
   const { id, itemId } = useLocalSearchParams();
@@ -9,6 +10,7 @@ const ModalFood = () => {
   const meals = restaurantById?.food.flatMap((c) => c.meals);
   const foundMeals = meals?.find((m) => m.id === +itemId);
   console.log(foundMeals);
+
   const navigation = useNavigation();
 
   const [note, setNote] = useState('');
