@@ -9,13 +9,19 @@ import { useEffect } from 'react';
 
 export default function HomeScreen() {
   const route = useRoute();
-  const { setStreet, streetName } = useAppContext();
+  const { setStreet, streetName, restaurantById, meals, foundMeals, restaurantCounts, totalPrice } =
+    useAppContext();
 
   useEffect(() => {
     const address = route.params?.address || 'Your Address Here';
     const streetName = address.split(',')[0].trim();
     setStreet(streetName);
   }, [route.params?.address, setStreet]);
+
+  // console.log('Restaurant ID:', restaurantById); // Log the restaurantId
+  // console.log('Restaurant Meals:', meals); // Log the restaurantId
+  // console.log('Found Meals:', foundMeals); // Log the restaurantId
+
 
   return (
     <SafeAreaView className={styles.container}>

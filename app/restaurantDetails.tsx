@@ -13,10 +13,11 @@ import ParallaxScrollView from '../components/ParallaxScrollView.js';
 import { Link, useGlobalSearchParams, useNavigation } from 'expo-router';
 import { Ionicons, FontAwesome5, AntDesign, FontAwesome } from '@expo/vector-icons';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { useAppContext } from 'context/appContext';
 
 const RestaurantDetails = ({ post }) => {
   const { id } = useGlobalSearchParams();
-  // console.log(id);
+  //console.log(post.id);
   const navigation = useNavigation();
   const [headerIconsColor, setHeaderIconsColor] = useState('white');
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
@@ -89,18 +90,29 @@ const RestaurantDetails = ({ post }) => {
     });
   }, [headerIconsColor]);
 
-  const renderItem: ListRenderItem<any> = ({ item, index }) => (
-    <Link href={{ pathname: '/modalFood', params: { id: id, itemId: item.id } }} asChild>
-      <TouchableOpacity className={styles.itemContainer}>
-        <View className="flex flex-1 my-4 mr-8">
-          <Text className="text-base">{item.name}</Text>
-          <Text className="text-sm text-[#6e6d72]">{item.info}</Text>
-          <Text className="">{item.price} €</Text>
-        </View>
-        <Image source={{ uri: item.img }} className={styles.foodImage} resizeMode="contain" />
-      </TouchableOpacity>
-    </Link>
-  );
+  const renderItem: ListRenderItem<any> = ({ item, index }) => {
+    const { foundMeals, count } = useAppContext();
+    console.log(count);
+
+    return (
+      <Link href={{ pathname: '/modalFood', params: { id: id, itemId: item.id } }} asChild>
+        <TouchableOpacity className={styles.itemContainer} onPress={() => {}}>
+          <View className="flex flex-1 my-4 mr-8">
+            {count > 1 && foundMeals?.id === item.id && (
+              <View className="flex flex-row items-center">
+                <Text className="text-lg">{count}</Text>
+                <Text className="text-base">{item.name}</Text>
+              </View>
+            )}
+            {count <= 1 && <Text className="text-base">{item.name}</Text>}
+            <Text className="text-sm text-[#6e6d72]">{item.info}</Text>
+            <Text className="">{item.price} €</Text>
+          </View>
+          <Image source={{ uri: item.img }} className={styles.foodImage} resizeMode="contain" />
+        </TouchableOpacity>
+      </Link>
+    );
+  };
 
   return (
     <>

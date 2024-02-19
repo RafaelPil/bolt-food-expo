@@ -36,7 +36,13 @@ export default function RootLayout() {
             presentation: 'modal',
             title: 'Delivery address',
             headerShown: false,
-           
+          }}
+        />
+        <Stack.Screen
+          name="restaurantDetails"
+          options={{
+            title: '',
+            headerShown: false,
           }}
         />
       </Stack>

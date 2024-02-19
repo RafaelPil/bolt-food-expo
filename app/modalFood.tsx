@@ -1,21 +1,45 @@
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocalSearchParams, useNavigation } from 'expo-router';
 import { dummyRestaurantsData } from 'assets/data/restaurantsData';
 import { useAppContext } from 'context/appContext';
 
 const ModalFood = () => {
   const { id, itemId } = useLocalSearchParams();
-  const restaurantById = dummyRestaurantsData?.find((r) => r?.id === id);
-  const meals = restaurantById?.food.flatMap((c) => c.meals);
-  const foundMeals = meals?.find((m) => m.id === +itemId);
-  console.log(foundMeals);
-
   const navigation = useNavigation();
+  const { setFoodData, count, setCount } = useAppContext();
 
   const [note, setNote] = useState('');
-  const [count, setCount] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(foundMeals?.price);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [restaurantById, setRestaurantById] = useState(null);
+  const [meals, setMeals] = useState([]);
+  const [foundMeals, setFoundMeals] = useState(null);
+
+  // Fetch data and update state when component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      // Simulate fetching restaurant data
+      const restaurantData = dummyRestaurantsData?.find((r) => r?.id === id);
+      setRestaurantById(restaurantData);
+
+      if (restaurantData) {
+        const allMeals = restaurantData.food.flatMap((c) => c.meals);
+        setMeals(allMeals);
+
+        const foundMeal = allMeals.find((m) => m.id === +itemId);
+        setFoundMeals(foundMeal);
+
+        if (foundMeal) {
+          setTotalPrice(foundMeal.price);
+        }
+      }
+    };
+
+    fetchData();
+  }, [id, itemId]);
+
+  console.log(foundMeals?.id);
+
   // items count
   const decrementCount = () => {
     if (count > 1) {
@@ -27,6 +51,11 @@ const ModalFood = () => {
   const incrementCount = () => {
     setCount(count + 1);
     setTotalPrice(totalPrice + foundMeals?.price);
+  };
+
+  const goBackAndSetFoodData = () => {
+    setFoodData({ totalPrice, restaurantById, meals, foundMeals, count });
+    navigation.goBack();
   };
 
   return (
@@ -62,7 +91,7 @@ const ModalFood = () => {
 
         <TouchableOpacity
           className="bg-[#34BB78] w-56 rounded-full items-center justify-center"
-          onPress={() => navigation.goBack()}>
+          onPress={goBackAndSetFoodData}>
           <Text className="text-white">Add €{totalPrice?.toFixed(2)}</Text>
         </TouchableOpacity>
       </View>
