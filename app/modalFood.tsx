@@ -11,6 +11,17 @@ const ModalFood = () => {
   console.log(foundMeals);
 
   const [note, setNote] = useState('');
+  const [count, setCount] = useState(1);
+  // items count
+  const decrementCount = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
+  const incrementCount = () => {
+    setCount(count + 1);
+  };
 
   return (
     <View className={styles.container}>
@@ -28,9 +39,19 @@ const ModalFood = () => {
 
       <View className="flex flex-row bg-white mt-1 p-4 mb-auto justify-between">
         <View className="flex flex-row justify-evenly border h-12 w-28 items-center rounded-full">
-          <Text>-</Text>
-          <Text>1</Text>
-          <Text>+</Text>
+          {count > 1 ? (
+            <TouchableOpacity onPress={decrementCount}>
+              <Text className="text-2xl text-black">—</Text>
+            </TouchableOpacity>
+          ) : (
+            <View>
+              <Text className="text-2xl text-gray-500">—</Text>
+            </View>
+          )}
+          <Text className="text-lg">{count}</Text>
+          <TouchableOpacity onPress={incrementCount}>
+            <Text className="text-2xl text-black">+</Text>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity className="bg-[#34BB78] w-56 rounded-full items-center justify-center">
           <Text className="text-white">Add €3.00</Text>
