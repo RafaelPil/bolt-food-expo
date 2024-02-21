@@ -24,8 +24,9 @@ const RestaurantDetails = ({ post }) => {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
 
   const { foundMeals, count, totalPrice } = useAppContext();
-    console.log(count);
-    console.log(totalPrice);
+  console.log(count);
+  console.log(totalPrice);
+  console.log(foundMeals);
 
   const opacity = useSharedValue(0);
   const animatedStyles = useAnimatedStyle(() => ({
@@ -95,18 +96,21 @@ const RestaurantDetails = ({ post }) => {
   }, [headerIconsColor]);
 
   const renderItem: ListRenderItem<any> = ({ item, index }) => {
-
     return (
       <Link href={{ pathname: '/modalFood', params: { id: id, itemId: item.id } }} asChild>
-        <TouchableOpacity className={styles.itemContainer} onPress={() => {}}>
-          <View className="flex flex-1 my-4 mr-8">
-            {count > 1 && foundMeals?.id === item.id && (
-              <View className="flex flex-row items-center">
-                <Text className="text-lg">{count}</Text>
-                <Text className="text-base">{item.name}</Text>
-              </View>
-            )}
-            {count <= 1 && <Text className="text-base">{item.name}</Text>}
+        <TouchableOpacity
+          className={`${styles.itemContainer} ${
+            count >= 1 && foundMeals?.id === item.id ? styles.greenBorder : ''
+          }`}>
+          <View className="flex flex-1 justify-center my-6 mr-8 ml-6">
+            <View className="flex flex-row items-center">
+              {count >= 1 && foundMeals?.id === item.id && (
+                <View className="bg-[#34BB78] items-center w-6 h-7 rounded-md mr-2">
+                  <Text className="text-lg text-white font-semibold">{count}</Text>
+                </View>
+              )}
+              <Text className="text-base font-semibold">{item.name}</Text>
+            </View>
             <Text className="text-sm text-[#6e6d72]">{item.info}</Text>
             <Text className="">{item.price} €</Text>
           </View>
@@ -170,16 +174,16 @@ const RestaurantDetails = ({ post }) => {
         </View>
 
         <View className={styles.itemsContainer}>
-          <View className="m-6">
+          <View>
             <SectionList
               sections={data}
               scrollEnabled={false}
               keyExtractor={(item, index) => `${item.id + index}`}
               renderItem={renderItem}
               ItemSeparatorComponent={() => <View className="border-[0.5px] border-slate-300" />}
-              SectionSeparatorComponent={() => <View className="border-[0.5px] border-slate-300" />}
+              // SectionSeparatorComponent={() => <View className="border-[0.5px] border-slate-300" />}
               renderSectionHeader={({ section: { title, index } }) => (
-                <Text className="text-2xl font-bold text-[#2e303d] my-4">{title}</Text>
+                <Text className="text-2xl font-bold text-[#2e303d] my-2 ml-6">{title}</Text>
               )}
             />
           </View>
@@ -232,7 +236,8 @@ const styles = {
   separator: 'h-[0.5px] bg-slate-300 my-4',
   deliveryAbout: 'text-sm ml-1 text-[#2e303d]',
   itemsContainer: 'flex bg-white mt-2 rounded-t-2xl',
-  itemContainer: 'flex flex-row justify-between my-2 items-center',
+  itemContainer: 'flex flex-row justify-betweenitems-center',
+  greenBorder: 'border-l-8 border-[#34BB78]',
   food: '',
   foodText: 'text-[#6e6d72]',
   foodPrice: '',
