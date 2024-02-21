@@ -8,7 +8,7 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import ParallaxScrollView from '../components/ParallaxScrollView.js';
 import { Link, useGlobalSearchParams, useNavigation } from 'expo-router';
 import { Ionicons, FontAwesome5, AntDesign, FontAwesome } from '@expo/vector-icons';
@@ -22,11 +22,11 @@ const RestaurantDetails = ({ post }) => {
   const [headerIconsColor, setHeaderIconsColor] = useState('white');
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
+  const [showButton, setShowButton] = useState(false);
 
   const { foundMeals, count, totalPrice } = useAppContext();
-  console.log(count);
-  console.log(totalPrice);
-  console.log(foundMeals);
+
+  console.log('Found meals: ', foundMeals);
 
   const opacity = useSharedValue(0);
   const animatedStyles = useAnimatedStyle(() => ({
@@ -94,6 +94,11 @@ const RestaurantDetails = ({ post }) => {
       ),
     });
   }, [headerIconsColor]);
+
+  useEffect(() => {
+    // Initially show the button only if totalPrice is greater than 0
+    setShowButton(totalPrice > 0);
+  }, [totalPrice]);
 
   const renderItem: ListRenderItem<any> = ({ item, index }) => {
     return (
@@ -216,6 +221,24 @@ const RestaurantDetails = ({ post }) => {
           </ScrollView>
         </View>
       </Animated.View>
+
+      {/* 
+
+      const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    // Initially show the button only if totalPrice is greater than 0
+    setShowButton(totalPrice > 0);
+  }, [totalPrice]); 
+  
+  */}
+      {showButton && (
+        <TouchableOpacity className="pt-4 pb-8 bg-white border-t border-gray-200">
+          <View className="text-white bg-[#34BB78] py-3 mx-7 rounded-full text-lg font-bold items-center">
+            <Text className="text-white font-bold text-lg">View basktet {totalPrice} €</Text>
+          </View>
+        </TouchableOpacity>
+      )}
     </>
   );
 };
