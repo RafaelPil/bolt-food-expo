@@ -222,22 +222,14 @@ const RestaurantDetails = ({ post }) => {
         </View>
       </Animated.View>
 
-      {/* 
-
-      const [showButton, setShowButton] = useState(false);
-
-  useEffect(() => {
-    // Initially show the button only if totalPrice is greater than 0
-    setShowButton(totalPrice > 0);
-  }, [totalPrice]); 
-  
-  */}
       {showButton && (
-        <TouchableOpacity className="pt-4 pb-8 bg-white border-t border-gray-200">
-          <View className="text-white bg-[#34BB78] py-3 mx-7 rounded-full text-lg font-bold items-center">
-            <Text className="text-white font-bold text-lg">View basktet {totalPrice} €</Text>
-          </View>
-        </TouchableOpacity>
+        <Link href={'/basketScreen'} asChild>
+          <TouchableOpacity className="pt-4 pb-8 bg-white border-t border-gray-200">
+            <View className="text-white bg-[#34BB78] py-3 mx-7 rounded-full text-lg font-bold items-center">
+              <Text className="text-white font-bold text-lg">View basktet {totalPrice} €</Text>
+            </View>
+          </TouchableOpacity>
+        </Link>
       )}
     </>
   );

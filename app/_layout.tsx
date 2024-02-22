@@ -1,6 +1,6 @@
 import { Stack, useNavigation } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, EvilIcons, Ionicons } from '@expo/vector-icons';
 import { AppProvider } from 'context/appContext';
 
 export default function RootLayout() {
@@ -43,6 +43,13 @@ export default function RootLayout() {
           options={{
             title: '',
             headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="basketScreen"
+          options={{
+            title: '',
+            headerShown: true,
           }}
         />
       </Stack>
