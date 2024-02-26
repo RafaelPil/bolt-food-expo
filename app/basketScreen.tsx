@@ -1,9 +1,17 @@
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import React, { useLayoutEffect, useContext, useState } from 'react';
-import { AntDesign, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  AntDesign,
+  Entypo,
+  FontAwesome5,
+  Ionicons,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons';
 import { useAppContext } from 'context/appContext';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
+import PricingComponent from 'components/pricingComponent';
+import MapView from 'react-native-maps';
 
 const sauceData = [
   {
@@ -53,12 +61,25 @@ const renderItem = ({ item }) => (
 );
 
 const BasketScreen = () => {
-  const { restaurantById, count, setCount, totalPrice, setTotalPrice, foundMeals } =
-    useAppContext();
+  const {
+    restaurantById,
+    count,
+    setCount,
+    totalPrice,
+    setTotalPrice,
+    foundMeals,
+    streetName,
+    coordinates,
+  } = useAppContext();
   const navigation = useNavigation();
   const [selectedOption, setSelectedOption] = useState('delivery');
 
-  console.log(foundMeals);
+  // Destructuring latitude and longitude from the coordinates object
+  const { latitude, longitude } = coordinates || {}; // If coordinates is null or undefined, provide an empty object
+
+  console.log('coordinates: ', coordinates);
+  console.log('latitude:', latitude);
+  console.log('longitude:', longitude);
 
   useLayoutEffect(() => {
     if (restaurantById && restaurantById.name) {
@@ -169,6 +190,7 @@ const BasketScreen = () => {
         </View>
       </View>
 
+      {/* const [selectedOption, setSelectedOption] = useState('delivery'); */}
       {/* Delivery Or Pickup */}
       <View className="flex rounded-2xl bg-white px-4 py-6 mt-2">
         <Text className="text-lg font-bold mb-4">Delivery or pickup?</Text>
@@ -288,8 +310,39 @@ const BasketScreen = () => {
           </View>
         </View>
       </View>
+
+      {/* Pricing */}
+      <View className="flex rounded-2xl bg-white px-4 py-6 mt-2">
+        <PricingComponent totalPrice={totalPrice} />
+      </View>
+
+      {/* Map View */}
+      <View className="flex rounded-2xl bg-white px-4 py-6 mt-2 flex-1">
+        {/* Google Places */}
+        <TouchableOpacity className={styles.header}>
+          <View className={styles.addressContainer}>
+            <MaterialCommunityIcons name="map-marker-outline" size={28} color="black" />
+            <Text className={styles.addressText}>{streetName}</Text>
+          </View>
+          <Entypo name="chevron-thin-right" size={22} color="gray" />
+        </TouchableOpacity>
+
+        {/* Map */}
+        <View className="flex flex-1 w-full h-full rounded-xl">
+          <View className="flex flex-1 rounded-lg bg-slate-500">
+            <MapView className="w-full h-52 rounded-lg" />
+          </View>
+          <Text>fsdfsd</Text>
+        </View>
+      </View>
     </ScrollView>
   );
+};
+
+const styles = {
+  header: 'flex-row justify-between items-center',
+  addressContainer: 'flex-row items-center',
+  addressText: 'ml-2',
 };
 
 export default BasketScreen;

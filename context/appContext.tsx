@@ -13,6 +13,7 @@ export const AppProvider = ({ children }) => {
   const [meals, setMeals] = useState([]);
   const [foundMeals, setFoundMeals] = useState(null);
   const [count, setCount] = useState(1); // New state for count
+  const [coordinates, setCoordinates] = useState(null);
 
   const setStreet = (street) => {
     setStreetName(street);
@@ -24,6 +25,10 @@ export const AppProvider = ({ children }) => {
     setMeals(data.meals);
     setFoundMeals(data.foundMeals);
     setCount(data.count); // Update count when setting food data
+  };
+
+  const setCoordinatesData = (coords) => {
+    setCoordinates(coords);
   };
 
   return (
@@ -42,6 +47,8 @@ export const AppProvider = ({ children }) => {
         count, // Provide count in the context
         setCount, // Provide setter function for count
         setFoodData,
+        coordinates, // Provide coordinates in the context
+        setCoordinates: setCoordinatesData, // Provide setter function for coordinates
       }}>
       {children}
     </AppContext.Provider>

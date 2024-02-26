@@ -2,16 +2,27 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Animated } from 'r
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { AntDesign, Feather, Ionicons } from '@expo/vector-icons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { Link, useNavigation } from 'expo-router';
+import { Link, router, useNavigation } from 'expo-router';
 import { useRoute } from '@react-navigation/native';
 import { useAppContext } from 'context/appContext';
 
 const ModalAddress = () => {
+  const { setCoordinates } = useAppContext();
   const navigation = useNavigation();
   const [headerVisible, setHeaderVisible] = useState(false);
   const [containerMargin] = useState(new Animated.Value(40));
 
   const googleAPI = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
+
+  const handleSelectPlace = (place) => {
+    console.log('Selected Place:', place);
+    const { lat, lng } = place.geometry.location;
+    setCoordinates({ latitude: lat, longitude: lng });
+    router.replace({
+      pathname: '/(tabs)/home',
+      params: { address: place.formatted_address },
+    });
+  };
 
   const toggleHeaderVisibility = () => {
     setHeaderVisible(!headerVisible);
@@ -55,6 +66,9 @@ const ModalAddress = () => {
         <GooglePlacesAutocomplete
           placeholder="Enter a new address"
           fetchDetails
+          onPress={(data, details = null) => {
+            handleSelectPlace(details);
+          }}
           query={{
             key: googleAPI,
             language: 'en',
@@ -82,18 +96,14 @@ const ModalAddress = () => {
           )}
           enablePoweredByContainer={false}
           renderRow={(item) => (
-            <Link
-              href={{ pathname: '/(tabs)/home', params: { address: item.description } }}
-              asChild>
-              <TouchableOpacity className="flex flex-row items-center">
-                <Feather name="map-pin" size={18} color="black" />
-                <Text className="ml-3">{item.description}</Text>
-              </TouchableOpacity>
-            </Link>
+            <View className="flex flex-row items-center">
+              <Feather name="map-pin" size={18} color="black" />
+              <Text className="ml-3">{item.description}</Text>
+            </View>
           )}
         />
       ),
-      headerLeft: null,
+      headerLeft: () => null,
     });
   };
 

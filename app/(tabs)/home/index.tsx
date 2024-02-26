@@ -22,7 +22,6 @@ export default function HomeScreen() {
   // console.log('Restaurant Meals:', meals); // Log the restaurantId
   // console.log('Found Meals:', foundMeals); // Log the restaurantId
 
-
   return (
     <SafeAreaView className={styles.container}>
       <FlatList
