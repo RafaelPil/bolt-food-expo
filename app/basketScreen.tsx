@@ -328,8 +328,8 @@ const BasketScreen = () => {
         </TouchableOpacity>
 
         {/* Map */}
-        <View className="flex flex-1 w-full h-full rounded-xl">
-          <View className="flex flex-1 rounded-lg bg-slate-500">
+        <View className="flex flex-1 w-full h-full mt-2">
+          <View className="flex flex-1 rounded-lg bg-slate-500 overflow-hidden">
             <MapView className="w-full h-52 rounded-lg" />
           </View>
           <Text>fsdfsd</Text>
