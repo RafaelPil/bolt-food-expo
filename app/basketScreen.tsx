@@ -3,6 +3,7 @@ import React, { useLayoutEffect, useContext, useState } from 'react';
 import {
   AntDesign,
   Entypo,
+  FontAwesome,
   FontAwesome5,
   Ionicons,
   MaterialCommunityIcons,
@@ -11,8 +12,10 @@ import { useAppContext } from 'context/appContext';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
 import PricingComponent from 'components/pricingComponent';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import DeliveryOptions from 'components/deliveryOptions';
+import MapViewComponent from 'components/mapViewComponent';
+import Checkbox from 'expo-checkbox';
 
 const sauceData = [
   {
@@ -72,8 +75,9 @@ const BasketScreen = () => {
     streetName,
     coordinates,
   } = useAppContext();
+
+  const [isChecked, setChecked] = useState(false);
   const navigation = useNavigation();
-  const [selectedOption, setSelectedOption] = useState('delivery');
 
   // Destructuring latitude and longitude from the coordinates object
   const { latitude, longitude } = coordinates || {}; // If coordinates is null or undefined, provide an empty object
@@ -115,10 +119,6 @@ const BasketScreen = () => {
 
   const incrementCount = () => {
     setCount(count + 1);
-  };
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
   };
 
   return (
@@ -201,22 +201,48 @@ const BasketScreen = () => {
 
       {/* Map View */}
       <View className="flex rounded-2xl bg-white px-4 py-6 mt-2 flex-1">
-        {/* Google Places */}
-        <TouchableOpacity className={styles.header}>
-          <View className={styles.addressContainer}>
-            <MaterialCommunityIcons name="map-marker-outline" size={28} color="black" />
-            <Text className={styles.addressText}>{streetName}</Text>
-          </View>
-          <Entypo name="chevron-thin-right" size={22} color="gray" />
-        </TouchableOpacity>
+        <MapViewComponent streetName={streetName} latitude={latitude} longitude={longitude} />
+      </View>
 
-        {/* Map */}
-        <View className="flex flex-1 w-full h-full mt-2">
-          <View className="flex flex-1 rounded-lg bg-slate-500 overflow-hidden">
-            <MapView className="w-full h-52 rounded-lg" />
+      {/* Place order */}
+      <View className="flex rounded-t-2xl bg-white py-6 mt-2 flex-1">
+        {/* Total */}
+        <View className="flex flex-row items-center justify-between mb-2 px-4">
+          <View className="flex flex-row items-center">
+            <Text className="text-lg mr-1 font-bold">Total</Text>
           </View>
-          <Text>fsdfsd</Text>
+          <Text className="text-lg font-bold">{totalPrice} €</Text>
         </View>
+
+        {/* Cash row */}
+        <View className="flex flex-row items-center justify-between mb-2 px-4">
+          <View className="flex flex-row items-center">
+            <FontAwesome5 name="money-bill-wave-alt" size={24} color="#34BB78" />
+            <View className="flex flex-col ml-2">
+              <Text className="text-base">Cash</Text>
+              <Text className="text-base text-[#34BB78]">Change</Text>
+            </View>
+          </View>
+          <Text className="text-base">{totalPrice} €</Text>
+        </View>
+
+        {/* Cash warning */}
+        <View className="flex flex-row items-center mb-2 px-4 mt-2">
+          <Checkbox
+            value={isChecked}
+            onValueChange={setChecked}
+            color={isChecked ? '#34BB78' : undefined}
+          />
+          <Text className="ml-2 text-base">
+            <Text>Cash order</Text>
+            <FontAwesome5 name="exclamation-triangle" size={18} color="#fcb001" />
+            I accept that courier may not have change
+            <FontAwesome5 name="exclamation-triangle" size={18} color="#fcb001" />
+          </Text>
+        </View>
+
+        {/* Separator */}
+        <View className="border-[0.5px] border-slate-200 my-4" />
       </View>
     </ScrollView>
   );

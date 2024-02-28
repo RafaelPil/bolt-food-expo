@@ -19,7 +19,7 @@ const PricingComponent = ({ totalPrice }) => {
         <View className="flex flex-row items-center">
           <Text className="text-small mr-1 font-bold">Subtotal</Text>
         </View>
-        <Text className="text-sm">0.00 €</Text>
+        <Text className="text-sm font-bold">0.00 €</Text>
       </View>
 
       {/* Small order fee */}
