@@ -52,6 +52,13 @@ export default function RootLayout() {
             headerShown: true,
           }}
         />
+        <Stack.Screen
+          name="orderProgress"
+          options={{
+            title: '',
+            headerShown: true,
+          }}
+        />
       </Stack>
     </AppProvider>
   );
