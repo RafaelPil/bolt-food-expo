@@ -18,6 +18,7 @@ import MapViewComponent from 'components/mapViewComponent';
 import Checkbox from 'expo-checkbox';
 import { SwipeButton } from '@arelstone/react-native-swipe-button';
 import { router } from 'expo-router';
+import SwipeButtonComponent from 'components/swipeButtonComponent';
 
 const sauceData = [
   {
@@ -80,7 +81,6 @@ const BasketScreen = () => {
 
   const [isChecked, setChecked] = useState(false);
   const [swiping, setSwiping] = useState(false);
-  const [progress, setProgress] = useState(0);
   const navigation = useNavigation();
 
   // Destructuring latitude and longitude from the coordinates object
@@ -125,14 +125,8 @@ const BasketScreen = () => {
     setCount(count + 1);
   };
 
-  const handleSwipeProgress = (percent) => {
-    setProgress(percent);
-    // You can add any logic here to decide when to switch the icon
-  };
-
   const onCompleteProgress = () => {
     router.push('/orderProgress');
-    setProgress(70);
   };
 
   return (
@@ -258,32 +252,7 @@ const BasketScreen = () => {
         {/* Separator */}
         <View className="border-[0.5px] border-slate-200 my-4" />
 
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-          <SwipeButton
-            Icon={
-              progress >= 70 ? (
-                <AntDesign name="check" size={24} color="white" /> // Show check icon when progress reaches 70%
-              ) : (
-                <AntDesign name="arrowright" size={24} color="#34BB78" />
-              )
-            }
-            onComplete={onCompleteProgress}
-            title={'Place order \n Slide to confirm'}
-            containerStyle={{ backgroundColor: '#34BB78' }}
-            circleBackgroundColor="white"
-            underlayStyle={{
-              backgroundColor: swiping ? '#34BB78' : 'white',
-              borderRadius: 999,
-              marginLeft: 10,
-            }}
-            height={60}
-            titleStyle={{ color: 'white', fontSize: 14 }}
-            onSwipeStart={() => setSwiping(true)}
-            onSwipeEnd={() => setSwiping(false)}
-            completeThresholdPercentage={70} // Set the percentage at which onComplete should be invoked
-            goBackToStart={true}
-          />
-        </View>
+        <SwipeButtonComponent />
       </View>
     </ScrollView>
   );
