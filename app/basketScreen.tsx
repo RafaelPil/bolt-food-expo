@@ -125,10 +125,6 @@ const BasketScreen = () => {
     setCount(count + 1);
   };
 
-  const onCompleteProgress = () => {
-    router.push('/orderProgress');
-  };
-
   return (
     <ScrollView className="flex flex-1 bg-[#ecedef]">
       <View className="flex rounded-b-2xl bg-white px-4 py-6">

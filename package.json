@@ -11,6 +11,7 @@
   "dependencies": {
     "@arelstone/react-native-swipe-button": "^0.3.0",
     "@expo/vector-icons": "^13.0.0",
+    "@gorhom/bottom-sheet": "^4.6.1",
     "@react-navigation/native": "^6.1.7",
     "expo": "~49.0.11",
     "expo-checkbox": "~2.4.0",
