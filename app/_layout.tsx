@@ -53,10 +53,11 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
-          name="orderProgress"
+          name="orderTracking"
           options={{
-            title: '',
+            title: 'Order tracking',
             headerShown: true,
+            headerTitleAlign: 'center',
           }}
         />
       </Stack>

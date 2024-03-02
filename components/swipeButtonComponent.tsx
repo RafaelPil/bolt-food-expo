@@ -5,11 +5,10 @@ import { AntDesign } from '@expo/vector-icons';
 import { SwipeButton } from '@arelstone/react-native-swipe-button';
 
 const SwipeButtonComponent = () => {
-
-    const [swiping, setSwiping] = useState(false);
+  const [swiping, setSwiping] = useState(false);
 
   const onCompleteProgress = () => {
-    router.push('/orderProgress');
+    router.push('/orderTracking');
   };
 
   return (
