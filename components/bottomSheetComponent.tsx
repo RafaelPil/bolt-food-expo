@@ -29,7 +29,7 @@ const trackData = [
 const BottomSheetComponent = () => {
   const snapPoints = useMemo(() => ['20%', '100%'], []);
   const [progress, setProgress] = useState(0); // Progress of the bar
-  const stepInterval = 3 * 60 * 1000; // 3 minutes in milliseconds
+  const stepInterval = 1 * 60 * 1000; // 3 minutes in milliseconds
 
   // Fixed time for delivery
   const fixedDeliveryTime = useMemo(() => {
@@ -92,8 +92,8 @@ const BottomSheetComponent = () => {
                 <Text
                   key={track.id}
                   className={`mr-4 text-base text-gray-500 ${
-                    index <= progress ? 'text-gray-500' : 'hidden'
-                  }`}>
+                    index > 0 && index <= progress ? 'mt-10' : '' // Apply mt-4 for all except the first element
+                  } ${index <= progress ? 'text-gray-500' : 'hidden'}`}>
                   {index <= progress
                     ? stepTimes[index].toLocaleTimeString('en-US', {
                         hour: 'numeric',
@@ -122,7 +122,11 @@ const BottomSheetComponent = () => {
             {/* Progress Text */}
             <View className="flex flex-col">
               {trackData.map((track, index) => (
-                <Text key={track.id} className="ml-6 text-base text-gray-500">
+                <Text
+                  key={track.id}
+                  className={`ml-6 text-base text-gray-500 ${
+                    index > 0 ? 'mt-10' : '' // Apply mt-4 for all except the first element
+                  } `}>
                   {track.text}
                 </Text>
               ))}
