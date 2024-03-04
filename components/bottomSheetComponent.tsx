@@ -7,29 +7,34 @@ const trackData = [
   {
     id: '0',
     text: 'has delayed your order by 15 min',
+    checked: true,
   },
   {
     id: '1',
     text: 'Courier has been assigned',
+    checked: false,
   },
   {
     id: '2',
     text: 'Preparing your order',
+    checked: false,
   },
   {
     id: '3',
     text: 'Courier is on its way',
+    checked: false,
   },
   {
     id: '4',
     text: 'Courier is delivering your order',
+    checked: false,
   },
 ];
 
 const BottomSheetComponent = () => {
   const snapPoints = useMemo(() => ['20%', '100%'], []);
   const [progress, setProgress] = useState(0); // Progress of the bar
-  const stepInterval = 1 * 60 * 1000; // 3 minutes in milliseconds
+  const stepInterval = 3 * 60 * 1000; // 3 minutes in milliseconds
 
   // Fixed time for delivery
   const fixedDeliveryTime = useMemo(() => {
@@ -85,7 +90,7 @@ const BottomSheetComponent = () => {
           <Text className="text-black font-bold text-lg mt-6 mb-4">Order progress</Text>
 
           {/* Progress bar */}
-          <View className="flex flex-row h-72 justify-start">
+          <View className="flex flex-row h-[275px] justify-start">
             {/* Progress Time */}
             <View className="flex flex-col">
               {trackData.map((track, index) => (
@@ -105,15 +110,32 @@ const BottomSheetComponent = () => {
             </View>
 
             {/* Progress Line */}
-            <View className="flex flex-col border-[1px] border-[#34BB78] ">
+            <View className="flex flex-col justify-between items-center">
+              {/* <View className="absolute h-[275px] border border-[#34BB78]" /> */}
               {trackData.map((track, index) => (
                 <View
                   key={track.id}
-                  className={`w-6 h-6 absolute bg-[#34BB78] rounded-full right-[-12px] ${
-                    index <= progress ? 'top-[-3px]' : 'top-[265px]'
-                  } items-center`}>
-                  {index <= progress && (
-                    <AntDesign name="check" size={16} color="white" style={{ marginTop: 4 }} />
+                  style={{
+                    width: 30,
+                    height: 30,
+                    backgroundColor: index <= progress ? '#34BB78' : 'transparent',
+                    borderWidth: index <= progress ? 0 : 2,
+                    borderColor: index <= progress ? '' : '#34BB78',
+                    borderRadius: 999,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  {index <= progress ? (
+                    <AntDesign
+                      name="check"
+                      size={16}
+                      color="white"
+                      style={{ marginTop: 4, alignItems: 'center', alignSelf: 'center' }}
+                    />
+                  ) : (
+                    <View className="bg-[#34BB78] h-3 w-3 rounded-full items-center justify-center">
+                      <View className="bg-green-100 w-2 h-2 rounded-full" />
+                    </View>
                   )}
                 </View>
               ))}
