@@ -138,7 +138,7 @@ const BasketScreen = () => {
             />
             <View>
               <Text className="text-lg text-gray-800">{foundMeals.name}</Text>
-              <Text className="text-base font-bold">{foundMeals.price} €</Text>
+              <Text className="text-base font-bold">{totalPrice} €</Text>
             </View>
           </View>
 

@@ -2,36 +2,33 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { AntDesign } from '@expo/vector-icons';
+import { useAppContext } from 'context/appContext';
 
 const trackData = [
   {
     id: '0',
     text: 'has delayed your order by 15 min',
-    checked: true,
   },
   {
     id: '1',
     text: 'Courier has been assigned',
-    checked: false,
   },
   {
     id: '2',
     text: 'Preparing your order',
-    checked: false,
   },
   {
     id: '3',
     text: 'Courier is on its way',
-    checked: false,
   },
   {
     id: '4',
     text: 'Courier is delivering your order',
-    checked: false,
   },
 ];
 
 const BottomSheetComponent = () => {
+  const { totalPrice, foundMeals, count } = useAppContext();
   const snapPoints = useMemo(() => ['20%', '100%'], []);
   const [progress, setProgress] = useState(0); // Progress of the bar
   const stepInterval = 3 * 60 * 1000; // 3 minutes in milliseconds
@@ -87,7 +84,7 @@ const BottomSheetComponent = () => {
           </View>
 
           {/* Text */}
-          <Text className="text-black font-bold text-lg mt-6 mb-4">Order progress</Text>
+          <Text className="text-black font-bold text-xl mt-6 mb-4">Order progress</Text>
 
           {/* Progress bar */}
           <View className="flex flex-row h-[275px] justify-start">
@@ -110,15 +107,15 @@ const BottomSheetComponent = () => {
             </View>
 
             {/* Progress Line */}
-            <View className="flex flex-col justify-between items-center">
-              {/* <View className="absolute h-[275px] border border-[#34BB78]" /> */}
+            <View className="flex flex-col justify-between items-center relative">
+              <View className="absolute h-[275px] border border-[#34BB78] z-5" />
               {trackData.map((track, index) => (
                 <View
                   key={track.id}
                   style={{
                     width: 30,
                     height: 30,
-                    backgroundColor: index <= progress ? '#34BB78' : 'transparent',
+                    backgroundColor: index <= progress ? '#34BB78' : 'white',
                     borderWidth: index <= progress ? 0 : 2,
                     borderColor: index <= progress ? '' : '#34BB78',
                     borderRadius: 999,
@@ -154,6 +151,20 @@ const BottomSheetComponent = () => {
               ))}
             </View>
           </View>
+
+          {/* Order Number */}
+          <Text className="text-black font-bold text-xl mt-16 mb-4">Order #P54NK</Text>
+
+          {/* Order */}
+          <View>
+            <View className="flex flex-row items-center justify-between">
+              <Text className="text-base text-gray-800">
+                {count} * {foundMeals.name}
+              </Text>
+              <Text className="text-base text-gray-800">{totalPrice} €</Text>
+            </View>
+          </View>
+          
         </View>
       </BottomSheet>
     </>
